@@ -1,0 +1,30 @@
+{
+	"name": "capstone",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"start": "ts-node src/server.ts",
+		"build": "tsc"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/edwrdrvera/bed-final.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/edwrdrvera/bed-final/issues"
+	},
+	"homepage": "https://github.com/edwrdrvera/bed-final#readme",
+	"description": "",
+	"devDependencies": {
+		"@types/express": "^5.0.1",
+		"@types/node": "^22.13.13",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.8.2"
+	},
+	"dependencies": {
+		"express": "^4.21.2"
+	}
+}
