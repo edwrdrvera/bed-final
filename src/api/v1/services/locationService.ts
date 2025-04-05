@@ -1,4 +1,8 @@
-import { LocationInput, Location } from "../models/locationModel";
+import {
+	LocationInput,
+	Location,
+	LocationUpdate,
+} from "../models/locationModel";
 import { PokemonData } from "../models/pokemonModel";
 import {
 	DocumentData,
@@ -8,6 +12,7 @@ import {
 	createDocument,
 	getDocuments,
 	getDocumentById,
+	updateDocument,
 } from "../repositories/firestoreRepository";
 import { getPokemonDetailsByName } from "./pokemonService";
 
@@ -58,4 +63,13 @@ export const getLocationById = async (id: string): Promise<Location> => {
 	const data: DocumentData = doc.data() as DocumentData;
 	const location: Location = { id: doc.id, ...data } as Location;
 	return location;
+};
+
+export const updateLocation = async (
+	id: string,
+	locationData: LocationUpdate
+): Promise<Location> => {
+	await updateDocument(COLLECTION, id, locationData);
+	const updatedLocation: Location = await getLocationById(id);
+	return updatedLocation;
 };
