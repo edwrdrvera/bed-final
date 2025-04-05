@@ -9,4 +9,6 @@ router.get("/", locationController.getAllLocations);
 
 router.get("/:id", locationController.getLocationById);
 
+router.put("/:id", locationController.updateLocation);
+
 export default router;
