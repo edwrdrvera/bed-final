@@ -6,6 +6,12 @@ export interface LocationInput {
 	pokemon: string[];
 }
 
+export interface LocationUpdate {
+	addressName?: string;
+	terrain?: string;
+	pokemon?: string[];
+}
+
 export interface Location {
 	id: string;
 	addressName: string;
