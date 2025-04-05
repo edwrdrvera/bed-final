@@ -1,8 +1,8 @@
-export interface Pokemon {
+export interface PokemonData {
 	id: string;
 	name: string;
 	abilities: object[];
-	type: string;
+	type: string[];
 	height: number;
 	weight: number;
 }
