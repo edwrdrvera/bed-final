@@ -13,6 +13,7 @@ import {
 	getDocuments,
 	getDocumentById,
 	updateDocument,
+	deleteDocument,
 } from "../repositories/firestoreRepository";
 import { getPokemonDetailsByName } from "./pokemonService";
 
@@ -72,4 +73,8 @@ export const updateLocation = async (
 	await updateDocument(COLLECTION, id, locationData);
 	const updatedLocation: Location = await getLocationById(id);
 	return updatedLocation;
+};
+
+export const deleteLocation = async (id: string): Promise<void> => {
+	await deleteDocument(COLLECTION, id);
 };
