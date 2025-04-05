@@ -95,3 +95,20 @@ export const updateLocation = async (
 		});
 	}
 };
+
+export const deleteLocation = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+): Promise<void> => {
+	try {
+		const locationId: string = req.params.id;
+		await locationService.deleteLocation(locationId);
+		res.status(204).send();
+	} catch (error) {
+		console.error("Error in deleteLocation controller:", error);
+		res.status(500).json({
+			message: "Internal server error occurred while deleting location.",
+		});
+	}
+};
