@@ -1,1 +1,8 @@
 node_modules/
+dist/
+.vscode/
+.DS_Store
+capstone-project-479ac-firebase-adminsdk-fbsvc-c43f22911a.json
+
+coverage/
+.env
