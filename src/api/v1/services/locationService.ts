@@ -1,7 +1,9 @@
-import { get } from "http";
 import { LocationInput, Location } from "../models/locationModel";
 import { PokemonData } from "../models/pokemonModel";
-import { createDocument } from "../repositories/firestoreRepository";
+import {
+	createDocument,
+	getDocuments,
+} from "../repositories/firestoreRepository";
 import { getPokemonDetailsByName } from "./pokemonService";
 
 const COLLECTION: string = "locations";
@@ -9,15 +11,11 @@ const COLLECTION: string = "locations";
 export const createLocation = async (
 	locationData: LocationInput
 ): Promise<Location> => {
-	console.log("Creating location with data:", locationData);
-
 	const dataToSave: Omit<Location, "id"> = {
 		addressName: locationData.addressName,
 		terrain: locationData.terrain,
 		pokemon: [],
 	};
-
-	console.log(dataToSave);
 
 	if (locationData.pokemon && locationData.pokemon.length > 0) {
 		const fetchedPokemonData: PokemonData[] = await Promise.all(
@@ -36,4 +34,15 @@ export const createLocation = async (
 
 	const id: string = await createDocument(COLLECTION, dataToSave);
 	return { id, ...dataToSave } as Location;
+};
+
+export const getAllLocations = async (): Promise<Location[]> => {
+	const snapshot: FirebaseFirestore.QuerySnapshot = await getDocuments(
+		COLLECTION
+	);
+
+	return snapshot.docs.map((doc) => {
+		const data: FirebaseFirestore.DocumentData = doc.data();
+		return { id: doc.id, ...data } as Location;
+	});
 };
