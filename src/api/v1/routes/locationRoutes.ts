@@ -5,4 +5,6 @@ const router: Router = express.Router();
 
 router.post("/", locationController.createLocation);
 
+router.get("/", locationController.getAllLocations);
+
 export default router;
