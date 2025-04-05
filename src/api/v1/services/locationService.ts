@@ -1,8 +1,13 @@
 import { LocationInput, Location } from "../models/locationModel";
 import { PokemonData } from "../models/pokemonModel";
 import {
+	DocumentData,
+	DocumentSnapshot,
+} from "node_modules/firebase-admin/lib/firestore";
+import {
 	createDocument,
 	getDocuments,
+	getDocumentById,
 } from "../repositories/firestoreRepository";
 import { getPokemonDetailsByName } from "./pokemonService";
 
@@ -45,4 +50,12 @@ export const getAllLocations = async (): Promise<Location[]> => {
 		const data: FirebaseFirestore.DocumentData = doc.data();
 		return { id: doc.id, ...data } as Location;
 	});
+};
+
+export const getLocationById = async (id: string): Promise<Location> => {
+	const doc: DocumentSnapshot<DocumentData, DocumentData> =
+		await getDocumentById(COLLECTION, id);
+	const data: DocumentData = doc.data() as DocumentData;
+	const location: Location = { id: doc.id, ...data } as Location;
+	return location;
 };
