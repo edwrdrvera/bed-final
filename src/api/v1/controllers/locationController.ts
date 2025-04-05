@@ -20,3 +20,19 @@ export const createLocation = async (
 		});
 	}
 };
+
+export const getAllLocations = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+): Promise<void> => {
+	try {
+		const locations: Location[] = await locationService.getAllLocations();
+		res.status(200).json(locations);
+	} catch (error) {
+		console.error("Error in getAllLocations controller:", error);
+		res.status(500).json({
+			message: "Internal server error occurred while fetching locations.",
+		});
+	}
+};
