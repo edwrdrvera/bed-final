@@ -11,4 +11,6 @@ router.get("/:id", locationController.getLocationById);
 
 router.put("/:id", locationController.updateLocation);
 
+router.delete("/:id", locationController.deleteLocation);
+
 export default router;
