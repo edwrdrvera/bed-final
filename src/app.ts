@@ -1,7 +1,13 @@
 import express, { Express } from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+import locationRoutes from "./api/v1/routes/locationRoutes";
 
 // Initialize Express application
 const app: Express = express();
+app.use(express.json());
 
 // Define a route
 app.get("/", (req, res) => {
@@ -16,5 +22,7 @@ app.get("/api/v1/health", (req, res) => {
 		version: "1.0.0",
 	});
 });
+
+app.use("/api/v1/locations", locationRoutes);
 
 export default app;
