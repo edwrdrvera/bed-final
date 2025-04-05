@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as locationService from "../services/locationService";
-import { Location } from "../models/locationModel";
+import { Location, LocationUpdate } from "../models/locationModel";
 
 export const createLocation = async (
 	req: Request,
@@ -58,6 +58,40 @@ export const getLocationById = async (
 		console.error("Error in getLocationById controller:", error);
 		res.status(500).json({
 			message: "Internal server error occurred while fetching location.",
+		});
+	}
+};
+
+export const updateLocation = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+): Promise<void> => {
+	try {
+		const updateData: LocationUpdate = {};
+
+		if (req.body.addressName) {
+			updateData.addressName = req.body.addressName;
+		}
+		if (req.body.terrain) {
+			updateData.terrain = req.body.terrain;
+		}
+		if (req.body.pokemon) {
+			updateData.pokemon = req.body.pokemon;
+		}
+
+		const updatedLocation: Location = await locationService.updateLocation(
+			req.params.id,
+			updateData
+		);
+
+		if (updatedLocation) {
+			res.status(200).json(updatedLocation);
+		}
+	} catch (error) {
+		console.error("Error in updateLocation controller:", error);
+		res.status(500).json({
+			message: "Internal server error occurred while updating location.",
 		});
 	}
 };
