@@ -36,3 +36,28 @@ export const getAllLocations = async (
 		});
 	}
 };
+
+export const getLocationById = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+): Promise<void> => {
+	try {
+		const locationId: string = req.params.id;
+		const location: Location = await locationService.getLocationById(
+			locationId
+		);
+		if (location) {
+			res.status(200).json(location);
+		} else {
+			res.status(404).json({
+				message: `Location with ID '${locationId}' not found.`,
+			});
+		}
+	} catch (error) {
+		console.error("Error in getLocationById controller:", error);
+		res.status(500).json({
+			message: "Internal server error occurred while fetching location.",
+		});
+	}
+};
