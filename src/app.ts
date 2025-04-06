@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+import errorHandler from "./api/v1/middleware/errorHandler";
 import locationRoutes from "./api/v1/routes/locationRoutes";
 
 // Initialize Express application
@@ -24,5 +25,7 @@ app.get("/api/v1/health", (req, res) => {
 });
 
 app.use("/api/v1/locations", locationRoutes);
+
+app.use(errorHandler);
 
 export default app;
