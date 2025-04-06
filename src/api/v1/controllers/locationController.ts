@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import * as locationService from "../services/locationService";
 import { Location, LocationUpdate } from "../models/locationModel";
+import { HTTP_STATUS } from "../../../constants/httpConstants";
+import { successResponse } from "../models/responseModel";
 
 export const createLocation = async (
 	req: Request,
@@ -12,12 +14,11 @@ export const createLocation = async (
 		const newLocation: Location = await locationService.createLocation(
 			req.body
 		);
-		res.status(201).json(newLocation);
+		res
+			.status(HTTP_STATUS.OK)
+			.json(successResponse(newLocation, "Location Created"));
 	} catch (error) {
-		console.error("Error in createLocation controller:", error);
-		res.status(500).json({
-			message: "Internal server error occurred while creating location.",
-		});
+		next(error);
 	}
 };
 
@@ -28,12 +29,9 @@ export const getAllLocations = async (
 ): Promise<void> => {
 	try {
 		const locations: Location[] = await locationService.getAllLocations();
-		res.status(200).json(locations);
+		res.status(HTTP_STATUS.OK).json(successResponse(locations));
 	} catch (error) {
-		console.error("Error in getAllLocations controller:", error);
-		res.status(500).json({
-			message: "Internal server error occurred while fetching locations.",
-		});
+		next(error);
 	}
 };
 
@@ -47,18 +45,11 @@ export const getLocationById = async (
 		const location: Location = await locationService.getLocationById(
 			locationId
 		);
-		if (location) {
-			res.status(200).json(location);
-		} else {
-			res.status(404).json({
-				message: `Location with ID '${locationId}' not found.`,
-			});
-		}
+		res
+			.status(HTTP_STATUS.OK)
+			.json(successResponse(location, "Location Found"));
 	} catch (error) {
-		console.error("Error in getLocationById controller:", error);
-		res.status(500).json({
-			message: "Internal server error occurred while fetching location.",
-		});
+		next(error);
 	}
 };
 
@@ -84,15 +75,11 @@ export const updateLocation = async (
 			req.params.id,
 			updateData
 		);
-
-		if (updatedLocation) {
-			res.status(200).json(updatedLocation);
-		}
+		res
+			.status(HTTP_STATUS.OK)
+			.json(successResponse(updatedLocation, "Location Updated"));
 	} catch (error) {
-		console.error("Error in updateLocation controller:", error);
-		res.status(500).json({
-			message: "Internal server error occurred while updating location.",
-		});
+		next(error);
 	}
 };
 
@@ -102,13 +89,9 @@ export const deleteLocation = async (
 	next: NextFunction
 ): Promise<void> => {
 	try {
-		const locationId: string = req.params.id;
-		await locationService.deleteLocation(locationId);
-		res.status(204).send();
+		await locationService.deleteLocation(req.params.id);
+		res.status(HTTP_STATUS.OK).json(successResponse(null, "Location Deleted"));
 	} catch (error) {
-		console.error("Error in deleteLocation controller:", error);
-		res.status(500).json({
-			message: "Internal server error occurred while deleting location.",
-		});
+		next(error);
 	}
 };
