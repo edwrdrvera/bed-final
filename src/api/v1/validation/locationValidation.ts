@@ -1,6 +1,6 @@
 import Joi, { ObjectSchema } from "joi";
 
-export const locationSchema: ObjectSchema = Joi.object({
+export const createLocationSchema: ObjectSchema = Joi.object({
 	id: Joi.string()
 		.optional()
 		.messages({ "string.empty": "Location ID cannot be empty" }),

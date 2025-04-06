@@ -15,7 +15,7 @@ import {
 	updateDocument,
 	deleteDocument,
 } from "../repositories/firestoreRepository";
-import { getPokemonDetailsByName } from "./pokemonService";
+import { getPokemonDetailsByName } from "./getPokemonService";
 
 const COLLECTION: string = "locations";
 
