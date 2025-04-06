@@ -6,3 +6,8 @@ export interface PokemonData {
 	height: number;
 	weight: number;
 }
+
+export interface PokemonInTeam {
+	name: string;
+	type: string[];
+}
