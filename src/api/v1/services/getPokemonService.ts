@@ -30,7 +30,8 @@ export const getPokemonDetailsByName = async (
 		};
 
 		return pokemonData as PokemonData;
-	} catch (error: any) {
+	} catch (error) {
+		console.error(`Error fetching Pokémon data: ${error}`);
 		return null;
 	}
 };
