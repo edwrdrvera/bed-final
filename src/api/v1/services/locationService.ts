@@ -31,7 +31,9 @@ export const createLocation = async (
 	if (locationData.pokemon && locationData.pokemon.length > 0) {
 		const fetchedPokemonData: PokemonData[] = await Promise.all(
 			locationData.pokemon.map(async (pokemonName) => {
-				const pokemonData = await getPokemonDetailsByName(pokemonName);
+				const pokemonData: PokemonData | null = await getPokemonDetailsByName(
+					pokemonName
+				);
 				if (pokemonData) {
 					return pokemonData;
 				} else {

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as trainerService from "../services/trainerService";
-import { Trainer, TrainerUpdate, TrainerInput } from "../models/trainerModel";
+import { Trainer, TrainerUpdate } from "../models/trainerModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { successResponse } from "../models/responseModel";
 

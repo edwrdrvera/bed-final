@@ -1,12 +1,12 @@
 import { PokemonClient, Pokemon } from "pokenode-ts";
 import { PokemonData, PokemonInTeam } from "../models/pokemonModel";
 
-const api = new PokemonClient();
+const api: PokemonClient = new PokemonClient();
 
 export const getPokemonDetailsByName = async (
 	name: string
 ): Promise<PokemonData | null> => {
-	const lowerCaseName = name.toLowerCase();
+	const lowerCaseName: string = name.toLowerCase();
 	try {
 		const pokemon: Pokemon = await api.getPokemonByName(lowerCaseName);
 		const pokemonDetails: Partial<Pokemon> = {
@@ -29,24 +29,16 @@ export const getPokemonDetailsByName = async (
 			weight: pokemonDetails.weight || 0,
 		};
 
-		return pokemonData as PokemonData; // Cast to Pokemon type
+		return pokemonData as PokemonData;
 	} catch (error: any) {
-		if (error.response && error.response.status === 404) {
-			console.warn(`Pokemon named '${name}' not found in PokeAPI.`);
-		} else {
-			console.error(
-				`Error fetching Pokemon '${name}' from PokeAPI:`,
-				error.message || error
-			);
-		}
-		return null; // Return null on error/not found
+		return null;
 	}
 };
 
 export const getPokemonTeamDataByName = async (
 	name: string
 ): Promise<PokemonInTeam | null> => {
-	const lowerCaseName = name.toLowerCase();
+	const lowerCaseName: string = name.toLowerCase();
 	const pokemon: Pokemon = await api.getPokemonByName(lowerCaseName);
 	const pokemonDetails: Partial<Pokemon> = {
 		name: pokemon.name,

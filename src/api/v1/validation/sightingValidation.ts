@@ -1,4 +1,4 @@
-import Joi, { date, ObjectSchema } from "joi";
+import Joi, { ObjectSchema } from "joi";
 
 export const createSightingSchema: ObjectSchema = Joi.object({
 	trainerId: Joi.string().trim().required().messages({

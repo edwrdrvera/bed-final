@@ -1,5 +1,5 @@
 import { Trainer, TrainerInput, TrainerUpdate } from "../models/trainerModel";
-import { PokemonData, PokemonInTeam } from "../models/pokemonModel";
+import { PokemonInTeam } from "../models/pokemonModel";
 import {
 	DocumentData,
 	DocumentSnapshot,
@@ -28,7 +28,8 @@ export const createTrainer = async (
 	if (trainerData.team && trainerData.team.length > 0) {
 		const fetchedPokemonData: PokemonInTeam[] = await Promise.all(
 			trainerData.team.map(async (pokemonName) => {
-				const pokemonData = await getPokemonTeamDataByName(pokemonName);
+				const pokemonData: PokemonInTeam | null =
+					await getPokemonTeamDataByName(pokemonName);
 				if (pokemonData) {
 					return pokemonData;
 				} else {

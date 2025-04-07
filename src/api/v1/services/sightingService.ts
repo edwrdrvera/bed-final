@@ -50,7 +50,7 @@ export const createSighting = async (
 		);
 	}
 
-	const sightingDate =
+	const sightingDate: Date =
 		typeof sightingData.date === "string"
 			? new Date(sightingData.date)
 			: sightingData.date;
@@ -62,7 +62,7 @@ export const createSighting = async (
 		date: sightingDate,
 	};
 
-	const id = await createDocument(SIGHTINGS_COLLECTION, dataToSave);
+	const id: string = await createDocument(SIGHTINGS_COLLECTION, dataToSave);
 	return {
 		id,
 		...dataToSave,
