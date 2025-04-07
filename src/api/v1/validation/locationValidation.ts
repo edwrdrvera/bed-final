@@ -14,7 +14,7 @@ export const createLocationSchema: ObjectSchema = Joi.object({
 	}),
 	pokemon: Joi.array()
 		.items(
-			Joi.string().trim().required().messages({
+			Joi.string().trim().empty("").messages({
 				"string.base": "Pokemon name must be a string",
 				"string.empty": "Pokemon name cannot be empty",
 				"any.required": "Pokemon name is required within the array",
