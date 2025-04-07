@@ -13,9 +13,12 @@ export const createTrainerSchema: ObjectSchema = Joi.object({
 		"number.integer": "age must be an integer",
 		"number.positive": "age must be a positive number",
 	}),
+	region: Joi.string().trim().optional().messages({
+		"string.empty": "region cannot be empty",
+	}),
 	team: Joi.array()
 		.items(
-			Joi.string().trim().required().messages({
+			Joi.string().trim().empty("").messages({
 				"string.base": "Pokemon name must be a string",
 				"string.empty": "Pokemon name cannot be empty",
 				"any.required": "Pokemon name is required within the array",
@@ -41,9 +44,12 @@ export const updateTrainerSchema: ObjectSchema = Joi.object({
 		"number.integer": "age must be an integer",
 		"number.positive": "age must be a positive number",
 	}),
+	region: Joi.string().trim().optional().messages({
+		"string.empty": "region cannot be empty",
+	}),
 	team: Joi.array()
 		.items(
-			Joi.string().trim().required().messages({
+			Joi.string().trim().empty("").messages({
 				"string.base": "Pokemon name must be a string",
 				"string.empty": "Pokemon name cannot be empty",
 				"any.required": "Pokemon name is required within the array",

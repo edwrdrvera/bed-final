@@ -21,6 +21,7 @@ export const createTrainer = async (
 	const dataToSave: Omit<Trainer, "id"> = {
 		name: trainerData.name,
 		age: trainerData.age,
+		region: trainerData.region,
 		team: [],
 	};
 
