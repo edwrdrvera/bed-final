@@ -3,13 +3,16 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+import setupSwagger from "../config/swagger";
 import errorHandler from "./api/v1/middleware/errorHandler";
 import locationRoutes from "./api/v1/routes/locationRoutes";
 import trainerRoutes from "./api/v1/routes/trainerRoutes";
 import sightingRoutes from "./api/v1/routes/sightingRoutes";
 
-// Initialize Express application
 const app: Express = express();
+
+setupSwagger(app);
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
