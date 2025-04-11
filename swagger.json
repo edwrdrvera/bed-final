@@ -1,0 +1,667 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Location, Pokemon, Sightings Management API Documentation",
+		"version": "1.0.0",
+		"description": "This is the API documentation for the applciation."
+	},
+	"servers": [
+		{
+			"url": "http://localhost:3000/api/v1",
+			"description": "Local Server"
+		}
+	],
+	"components": {
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		},
+		"schemas": {
+			"LocationInput": {
+				"type": "object",
+				"properties": {
+					"addressName": {
+						"type": "string",
+						"description": "The name of the address or location."
+					},
+					"terrain": {
+						"type": "string",
+						"description": "The type of terrain (e.g., forest, mountain, etc.)."
+					},
+					"pokemon": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "A list of Pokémon associated with the location."
+					}
+				}
+			},
+			"LocationUpdate": {
+				"type": "object",
+				"properties": {
+					"addressName": {
+						"type": "string",
+						"description": "The updated name of the address or location."
+					},
+					"terrain": {
+						"type": "string",
+						"description": "The updated type of terrain."
+					},
+					"pokemon": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "A list of Pokémon associated with the location (can be updated)."
+					}
+				}
+			},
+			"Location": {
+				"type": "object",
+				"required": ["id", "addressName", "terrain", "pokemon"],
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "The unique identifier of the location."
+					},
+					"addressName": {
+						"type": "string",
+						"description": "The name of the address or location."
+					},
+					"terrain": {
+						"type": "string",
+						"description": "The type of terrain (e.g., forest, mountain, etc.)."
+					},
+					"pokemon": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/PokemonData"
+						},
+						"description": "A list of Pokémon associated with the location."
+					}
+				}
+			},
+			"PokemonData": {
+				"type": "object",
+				"required": ["id", "name", "abilities", "type", "height", "weight"],
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "The unique identifier for the Pokémon."
+					},
+					"name": {
+						"type": "string",
+						"description": "The name of the Pokémon."
+					},
+					"abilities": {
+						"type": "array",
+						"items": {
+							"type": "object"
+						},
+						"description": "A list of abilities the Pokémon has."
+					},
+					"type": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "A list of types the Pokémon belongs to."
+					},
+					"height": {
+						"type": "number",
+						"description": "The height of the Pokémon in meters."
+					},
+					"weight": {
+						"type": "number",
+						"description": "The weight of the Pokémon in kilograms."
+					}
+				}
+			},
+			"PokemonInTeam": {
+				"type": "object",
+				"required": ["name", "type"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The name of the Pokémon in the team."
+					},
+					"type": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "A list of types the Pokémon belongs to."
+					}
+				}
+			},
+			"Sighting": {
+				"type": "object",
+				"required": ["id", "trainerId", "locationId", "pokemonName", "date"],
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "The unique identifier for the sighting."
+					},
+					"trainerId": {
+						"type": "string",
+						"description": "The ID of the trainer who made the sighting."
+					},
+					"locationId": {
+						"type": "string",
+						"description": "The ID of the location where the sighting occurred."
+					},
+					"pokemonName": {
+						"type": "string",
+						"description": "The name of the Pokémon that was sighted."
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time",
+						"description": "The date and time when the sighting occurred."
+					}
+				}
+			},
+			"SightingInput": {
+				"type": "object",
+				"required": ["trainerId", "locationId", "pokemonName", "date"],
+				"properties": {
+					"trainerId": {
+						"type": "string",
+						"description": "The ID of the trainer making the sighting."
+					},
+					"locationId": {
+						"type": "string",
+						"description": "The ID of the location where the sighting occurred."
+					},
+					"pokemonName": {
+						"type": "string",
+						"description": "The name of the Pokémon sighted."
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time",
+						"description": "The date and time the sighting took place."
+					}
+				}
+			},
+			"SightingUpdate": {
+				"type": "object",
+				"properties": {
+					"trainerId": {
+						"type": "string",
+						"description": "The updated ID of the trainer making the sighting."
+					},
+					"locationId": {
+						"type": "string",
+						"description": "The updated ID of the location where the sighting occurred."
+					},
+					"pokemonName": {
+						"type": "string",
+						"description": "The updated name of the Pokémon sighted."
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time",
+						"description": "The updated date and time the sighting occurred."
+					}
+				}
+			},
+			"Trainer": {
+				"type": "object",
+				"required": ["id", "name", "age", "region", "team"],
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "The unique identifier for the trainer."
+					},
+					"name": {
+						"type": "string",
+						"description": "The name of the Pokémon trainer."
+					},
+					"age": {
+						"type": "number",
+						"description": "The age of the trainer."
+					},
+					"region": {
+						"type": "string",
+						"description": "The region the trainer belongs to."
+					},
+					"team": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/PokemonInTeam"
+						},
+						"description": "A list of Pokémon in the trainer's team."
+					}
+				}
+			},
+			"TrainerInput": {
+				"type": "object",
+				"required": ["name", "age", "region", "team"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The name of the new Pokémon trainer."
+					},
+					"age": {
+						"type": "number",
+						"description": "The age of the new trainer."
+					},
+					"region": {
+						"type": "string",
+						"description": "The region the new trainer belongs to."
+					},
+					"team": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "A list of Pokémon names (IDs) in the new trainer's team."
+					}
+				}
+			},
+			"TrainerUpdate": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The updated name of the trainer."
+					},
+					"age": {
+						"type": "number",
+						"description": "The updated age of the trainer."
+					},
+					"region": {
+						"type": "string",
+						"description": "The updated region the trainer belongs to."
+					},
+					"team": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "A list of updated Pokémon names (IDs) in the trainer's team."
+					}
+				}
+			}
+		}
+	},
+	"paths": {
+		"/api/v1/locations": {
+			"post": {
+				"summary": "Create a new location",
+				"description": "Create a new location with the provided details.",
+				"tags": ["Locations"],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LocationInput"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Location created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"example": "success"
+										},
+										"message": {
+											"type": "string",
+											"example": "Location created successfully"
+										},
+										"data": {
+											"$ref": "#/components/schemas/Location"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request due to invalid data"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"summary": "Get all locations",
+				"description": "Retrieve a list of all locations stored in the system.",
+				"tags": ["Locations"],
+				"responses": {
+					"200": {
+						"description": "A list of all locations",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Location"
+									}
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/api/v1/locations/{id}": {
+			"get": {
+				"summary": "Get a location by ID",
+				"description": "Retrieve a specific location by its ID.",
+				"tags": ["Locations"],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The unique ID of the location to retrieve."
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A location with the specified ID",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Location"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Location not found"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"put": {
+				"summary": "Update a location by ID",
+				"description": "Update the details of an existing location by its ID.",
+				"tags": ["Locations"],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The unique ID of the location to update."
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LocationUpdate"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Location updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Location"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request due to invalid input"
+					},
+					"404": {
+						"description": "Location not found"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete a location by ID",
+				"description": "Delete a specific location by its ID.",
+				"tags": ["Locations"],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The unique ID of the location to delete."
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Location deleted successfully"
+					},
+					"404": {
+						"description": "Location not found"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/api/v1/sightings": {
+			"post": {
+				"summary": "Create a new sighting",
+				"description": "Create a new Pokémon sighting with the provided details.",
+				"tags": ["Sightings"],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SightingInput"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Sighting created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"example": "success"
+										},
+										"message": {
+											"type": "string",
+											"example": "Sighting created successfully"
+										},
+										"data": {
+											"$ref": "#/components/schemas/Sighting"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request due to invalid data"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"summary": "Get all sightings",
+				"description": "Retrieve a list of all Pokémon sightings stored in the system.",
+				"tags": ["Sightings"],
+				"responses": {
+					"200": {
+						"description": "A list of all sightings",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Sighting"
+									}
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/api/v1/sightings/{id}": {
+			"get": {
+				"summary": "Get a sighting by ID",
+				"description": "Retrieve a specific sighting by its ID.",
+				"tags": ["Sightings"],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The unique ID of the sighting to retrieve."
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A sighting with the specified ID",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Sighting"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Sighting not found"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"put": {
+				"summary": "Update a sighting by ID",
+				"description": "Update the details of an existing sighting by its ID.",
+				"tags": ["Sightings"],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The unique ID of the sighting to update."
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SightingUpdate"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Sighting updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Sighting"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request due to invalid input"
+					},
+					"404": {
+						"description": "Sighting not found"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete a sighting by ID",
+				"description": "Delete a specific sighting by its ID.",
+				"tags": ["Sightings"],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The unique ID of the sighting to delete."
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Sighting deleted successfully"
+					},
+					"404": {
+						"description": "Sighting not found"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/api/v1/trainers": {
+			"post": null,
+			"get": null
+		},
+		"/api/v1/trainers/{id}": {
+			"get": null,
+			"put": null,
+			"delete": null
+		}
+	},
+	"tags": []
+}
