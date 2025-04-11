@@ -21,7 +21,6 @@ import {
 	DocumentData,
 	DocumentSnapshot,
 } from "firebase-admin/firestore";
-import { StripTypeScriptTypesOptions } from "module";
 
 jest.mock("../../src/api/v1/services/getPokemonService");
 jest.mock("../../src/api/v1/repositories/firestoreRepository", () => ({

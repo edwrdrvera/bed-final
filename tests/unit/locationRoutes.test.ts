@@ -8,7 +8,6 @@ import {
 	deleteLocation,
 } from "../../src/api/v1/controllers/locationController";
 import {
-	Location,
 	LocationUpdate,
 	LocationInput,
 } from "../../src/api/v1/models/locationModel";
