@@ -5,7 +5,7 @@ import path from "path";
 
 import { generateSwaggerDocs } from "./swaggerOptions";
 
-const swaggerDistPath = path.join(
+const swaggerDistPath: string = path.join(
 	__dirname,
 	"../node_modules/swagger-ui-dist"
 );
