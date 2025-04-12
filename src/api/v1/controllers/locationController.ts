@@ -10,7 +10,6 @@ export const createLocation = async (
 	next: NextFunction
 ): Promise<void> => {
 	try {
-		console.log(req.body);
 		const newLocation: Location = await locationService.createLocation(
 			req.body
 		);

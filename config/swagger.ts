@@ -1,13 +1,26 @@
 import swaggerUi from "swagger-ui-express";
-// import swagger ui middleware
 import { Express } from "express";
+import express from "express";
+import path from "path";
+
 import { generateSwaggerDocs } from "./swaggerOptions";
 
-// serve swagger in apiDocs directory
+const swaggerDistPath: string = path.join(
+	__dirname,
+	"../node_modules/swagger-ui-dist"
+);
+
 const setupSwagger = (app: Express): void => {
+	// Generate the Swagger specification object
 	const swaggerDocs: object = generateSwaggerDocs();
-	app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+	app.use(
+		"/api-docs",
+		// Serve main static files
+		express.static(swaggerDistPath, { index: false }),
+		swaggerUi.serve,
+		swaggerUi.setup(swaggerDocs)
+	);
 };
 
-// export swagger endpoint for Express app
 export default setupSwagger;
