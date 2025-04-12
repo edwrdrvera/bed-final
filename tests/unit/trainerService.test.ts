@@ -20,7 +20,6 @@ import {
 	DocumentData,
 	DocumentSnapshot,
 } from "firebase-admin/firestore";
-import { before } from "node:test";
 
 jest.mock("../../src/api/v1/services/getPokemonService");
 jest.mock("../../src/api/v1/repositories/firestoreRepository", () => ({

@@ -7,7 +7,6 @@ import {
 	createTrainerSchema,
 	updateTrainerSchema,
 } from "../../src/api/v1/validation/trainerValidation";
-import { PokemonInTeam } from "../../src/api/v1/models/pokemonModel";
 
 interface Trainer {
 	id?: string;

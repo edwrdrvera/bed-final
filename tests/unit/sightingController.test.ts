@@ -14,7 +14,6 @@ import {
 	SightingInput,
 	SightingUpdate,
 } from "../../src/api/v1/models/sightingModel";
-import { messaging } from "firebase-admin";
 
 jest.mock("../../src/api/v1/services/sightingService");
 

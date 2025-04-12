@@ -14,14 +14,6 @@ import {
 	TrainerInput,
 	TrainerUpdate,
 } from "../../src/api/v1/models/trainerModel";
-import {
-	createTrainer,
-	deleteTrainer,
-	getAllTrainers,
-	getTrainerById,
-	updateTrainer,
-} from "../../src/api/v1/services/trainerService";
-import { database } from "firebase-admin";
 
 jest.mock("../../src/api/v1/services/locationService");
 
