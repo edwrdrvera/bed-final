@@ -20,16 +20,16 @@ setupSwagger(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const publicFolderPath = path.join(__dirname, "./public");
+const publicFolderPath: string = path.join(__dirname, "./public");
 app.use("/public", express.static(publicFolderPath));
 
-const swaggerDistPath = path.join(
+const swaggerDistPath: string = path.join(
 	__dirname,
 	"../node_modules/swagger-ui-dist"
 );
 
 // Define options for Swagger UI setup
-const swaggerOptions = {
+const swaggerOptions: object = {
 	customCssUrl: "/public/swagger-ui.css",
 	customSiteTitle: "PokeLog API Docs",
 };
