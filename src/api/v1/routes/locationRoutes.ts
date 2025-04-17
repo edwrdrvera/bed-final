@@ -5,6 +5,8 @@ import {
 	createLocationSchema,
 	updateLocationSchema,
 } from "../validation/locationValidation";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const router: Router = express.Router();
 
@@ -47,6 +49,8 @@ const router: Router = express.Router();
  */
 router.post(
 	"/",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "officer", "manager"] }),
 	validateRequest(createLocationSchema),
 	locationController.createLocation
 );
@@ -73,7 +77,12 @@ router.post(
  *       500:
  *         description: Internal server error
  */
-router.get("/", locationController.getAllLocations);
+router.get(
+	"/",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "officer", "manager", "user"] }),
+	locationController.getAllLocations
+);
 
 /**
  * @route GET /api/v1/locations/:id
@@ -104,7 +113,12 @@ router.get("/", locationController.getAllLocations);
  *       500:
  *         description: Internal server error
  */
-router.get("/:id", locationController.getLocationById);
+router.get(
+	"/:id",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "officer", "manager"] }),
+	locationController.getLocationById
+);
 
 /**
  * @route PUT /api/v1/locations/:id
@@ -145,6 +159,8 @@ router.get("/:id", locationController.getLocationById);
  */
 router.put(
 	"/:id",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "officer", "manager"] }),
 	validateRequest(updateLocationSchema),
 	locationController.updateLocation
 );
@@ -174,6 +190,11 @@ router.put(
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", locationController.deleteLocation);
+router.delete(
+	"/:id",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "officer", "manager"] }),
+	locationController.deleteLocation
+);
 
 export default router;
