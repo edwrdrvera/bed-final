@@ -12,6 +12,8 @@ import errorHandler from "./api/v1/middleware/errorHandler";
 import locationRoutes from "./api/v1/routes/locationRoutes";
 import trainerRoutes from "./api/v1/routes/trainerRoutes";
 import sightingRoutes from "./api/v1/routes/sightingRoutes";
+import userRoutes from "./api/v1/routes/userRoutes";
+import adminRoutes from "./api/v1/routes/adminRoutes";
 
 const app: Express = express();
 
@@ -59,6 +61,8 @@ app.get("/api/v1/health", (req, res) => {
 app.use("/api/v1/locations", locationRoutes);
 app.use("/api/v1/trainers", trainerRoutes);
 app.use("/api/v1/sightings", sightingRoutes);
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 app.use(errorHandler);
 
