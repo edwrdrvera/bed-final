@@ -1,5 +1,12 @@
 import express, { Router } from "express";
 import * as sightingController from "../controllers/sightingController";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
+import { validateRequest } from "../middleware/validate";
+import {
+	createSightingSchema,
+	updateSightingSchema,
+} from "../validation/sightingValidation";
 
 const router: Router = express.Router();
 
@@ -40,7 +47,13 @@ const router: Router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post("/", sightingController.createSighting);
+router.post(
+	"/",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "officer", "manager"] }),
+	validateRequest(createSightingSchema),
+	sightingController.createSighting
+);
 
 /**
  * @route GET /api/v1/sightings
@@ -64,7 +77,12 @@ router.post("/", sightingController.createSighting);
  *       500:
  *         description: Internal server error
  */
-router.get("/", sightingController.getAllSightings);
+router.get(
+	"/",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "officer", "manager", "user"] }),
+	sightingController.getAllSightings
+);
 
 /**
  * @route GET /api/v1/sightings/:id
@@ -95,7 +113,12 @@ router.get("/", sightingController.getAllSightings);
  *       500:
  *         description: Internal server error
  */
-router.get("/:id", sightingController.getSightingById);
+router.get(
+	"/:id",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "officer", "manager", "user"] }),
+	sightingController.getSightingById
+);
 
 /**
  * @route PUT /api/v1/sightings/:id
@@ -134,7 +157,13 @@ router.get("/:id", sightingController.getSightingById);
  *       500:
  *         description: Internal server error
  */
-router.put("/:id", sightingController.updateSighting);
+router.put(
+	"/:id",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "officer", "manager"] }),
+	validateRequest(updateSightingSchema),
+	sightingController.updateSighting
+);
 
 /**
  * @route DELETE /api/v1/sightings/:id
@@ -161,6 +190,11 @@ router.put("/:id", sightingController.updateSighting);
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", sightingController.deleteSighting);
+router.delete(
+	"/:id",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "manager"] }),
+	sightingController.deleteSighting
+);
 
 export default router;

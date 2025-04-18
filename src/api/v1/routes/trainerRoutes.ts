@@ -1,5 +1,7 @@
 import express, { Router } from "express";
 import * as trainerController from "../controllers/trainerController";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 import { validateRequest } from "../middleware/validate";
 import {
 	createTrainerSchema,
@@ -31,6 +33,8 @@ const router: Router = express.Router();
  */
 router.post(
 	"/",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "manager"] }),
 	validateRequest(createTrainerSchema),
 	trainerController.createTrainer
 );
@@ -50,7 +54,12 @@ router.post(
  *       500:
  *         description: Server error
  */
-router.get("/", trainerController.getAllTrainers);
+router.get(
+	"/",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "manager", "user"] }),
+	trainerController.getAllTrainers
+);
 
 /**
  * @route GET /api/v1/trainers/:id
@@ -76,7 +85,12 @@ router.get("/", trainerController.getAllTrainers);
  *       500:
  *         description: Server error
  */
-router.get("/:id", trainerController.getTrainerById);
+router.get(
+	"/:id",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "manager", "user"] }),
+	trainerController.getTrainerById
+);
 
 /**
  * @route PUT /api/v1/trainers/:id
@@ -110,6 +124,8 @@ router.get("/:id", trainerController.getTrainerById);
  */
 router.put(
 	"/:id",
+	authenticate,
+	isAuthorized({ hasRole: ["admin", "manager"] }),
 	validateRequest(updateTrainerSchema),
 	trainerController.updateTrainer
 );
@@ -138,6 +154,11 @@ router.put(
  *       500:
  *         description: Server error
  */
-router.delete("/:id", trainerController.deleteTrainer);
+router.delete(
+	"/:id",
+	authenticate,
+	isAuthorized({ hasRole: ["admin"] }),
+	trainerController.deleteTrainer
+);
 
 export default router;
