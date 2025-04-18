@@ -4,6 +4,14 @@ import { AuthenticationError } from "../errors/errors";
 import { getErrorMessage, getErrorCode } from "../utils/errorUtils";
 import { auth } from "../../../../config/firebaseConfig";
 
+/**
+ *  Middleware to authenticate Firebase ID tokens.
+ *
+ * @param req - Incoming request object.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Calls the next middleware or sends an error response.
+ */
 const authenticate = async (
 	req: Request,
 	res: Response,
@@ -37,10 +45,7 @@ const authenticate = async (
 			);
 		} else {
 			return next(
-				new AuthenticationError(
-					"Unauthorized: Invalid token",
-					"TOKEN_INVALID"
-				)
+				new AuthenticationError("Unauthorized: Invalid token", "TOKEN_INVALID")
 			);
 		}
 	}
