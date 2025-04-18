@@ -20,14 +20,17 @@ const router: Router = express.Router();
  *     summary: Create a new location
  *     description: Create a new location with the provided details.
  *     tags: [Locations]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
+ *       description: Location details
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/LocationInput'
+ *             $ref: "#/components/schemas/LocationInput"
  *     responses:
- *       201:
+ *       "201":
  *         description: Location created successfully
  *         content:
  *           application/json:
@@ -41,10 +44,16 @@ const router: Router = express.Router();
  *                   type: string
  *                   example: Location created successfully
  *                 data:
- *                   $ref: '#/components/schemas/Location'
- *       400:
+ *                   $ref: "#/components/schemas/Location"
+ *       "400":
  *         description: Bad request due to invalid data
- *       500:
+ *       "401":
+ *         description: Unauthorized - Authentication token is missing or invalid
+ *       "403":
+ *         description: Forbidden - The authenticated user is not authorized to create a location
+ *       "404":
+ *         description: Not Found - The specified location does not exist
+ *       "500":
  *         description: Internal server error
  */
 router.post(
@@ -63,18 +72,24 @@ router.post(
  * /api/v1/locations:
  *   get:
  *     summary: Get all locations
- *     description: Retrieve a list of all locations stored in the system.
+ *     description: Retrieves a list of all locations stored in the system.
  *     tags: [Locations]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
- *       200:
+ *       "200":
  *         description: A list of all locations
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Location'
- *       500:
+ *                 $ref: "#/components/schemas/Location"
+ *       "401":
+ *         description: Unauthorized - Authentication token is missing or invalid
+ *       "403":
+ *         description: Forbidden - The authenticated user does not have the required role
+ *       "500":
  *         description: Internal server error
  */
 router.get(
@@ -94,6 +109,8 @@ router.get(
  *     summary: Get a location by ID
  *     description: Retrieve a specific location by its ID.
  *     tags: [Locations]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -101,16 +118,21 @@ router.get(
  *         schema:
  *           type: string
  *         description: The unique ID of the location to retrieve.
+ *         example: "location-12345"
  *     responses:
- *       200:
+ *       "200":
  *         description: A location with the specified ID
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Location'
- *       404:
- *         description: Location not found
- *       500:
+ *               $ref: "#/components/schemas/Location"
+ *       "401":
+ *         description: Unauthorized - Authentication token is missing or invalid
+ *       "403":
+ *         description: Forbidden - The authenticated user does not have the required role
+ *       "404":
+ *         description: Location not found - The specified location does not exist
+ *       "500":
  *         description: Internal server error
  */
 router.get(
@@ -130,6 +152,8 @@ router.get(
  *     summary: Update a location by ID
  *     description: Update the details of an existing location by its ID.
  *     tags: [Locations]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -142,19 +166,23 @@ router.get(
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/LocationUpdate'
+ *             $ref: "#/components/schemas/LocationUpdate"
  *     responses:
- *       200:
+ *       "200":
  *         description: Location updated successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Location'
- *       400:
- *         description: Bad request due to invalid input
- *       404:
+ *               $ref: "#/components/schemas/Location"
+ *       "400":
+ *         description: Bad Request- Invalid input data
+ *       "401":
+ *         description: Unauthorized - Authentication token is missing or invalid
+ *       "403":
+ *         description: Forbidden - The authenticated user does not have the required role
+ *       "404":
  *         description: Location not found
- *       500:
+ *       "500":
  *         description: Internal server error
  */
 router.put(
@@ -175,6 +203,8 @@ router.put(
  *     summary: Delete a location by ID
  *     description: Delete a specific location by its ID.
  *     tags: [Locations]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -183,11 +213,15 @@ router.put(
  *           type: string
  *         description: The unique ID of the location to delete.
  *     responses:
- *       200:
+ *       "200":
  *         description: Location deleted successfully
- *       404:
- *         description: Location not found
- *       500:
+ *       "401":
+ *         description: Unauthorized - Authentication token is missing or invalid
+ *       "403":
+ *         description: Forbidden - The authenticated user does not have the required role
+ *       "404":
+ *         description: Location not found -
+ *       "500":
  *         description: Internal server error
  */
 router.delete(
