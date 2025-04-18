@@ -9,23 +9,29 @@ import { PokemonData } from "./pokemonModel";
  *   schemas:
  *     LocationInput:
  *       type: object
+ *       required:
+ *         - addressName
+ *         - terrain
  *       properties:
  *         addressName:
  *           type: string
  *           description: The name of the address or location.
+ *           example: "Viridian Forest"
  *         terrain:
  *           type: string
  *           description: The type of terrain (e.g., forest, mountain, etc.).
+ *           example: "Forest"
  *         pokemon:
  *           type: array
+ *           description: A list of Pokémon associated with the location.
  *           items:
  *             type: string
- *           description: A list of Pokémon associated with the location.
+ *             example: ["pikachu", "bulbasaur"]
  */
 export interface LocationInput {
 	addressName: string;
 	terrain: string;
-	pokemon: string[];
+	pokemon?: string[];
 }
 
 /**
@@ -41,14 +47,17 @@ export interface LocationInput {
  *         addressName:
  *           type: string
  *           description: The updated name of the address or location.
+ *           example: "Viridian Forest"
  *         terrain:
  *           type: string
  *           description: The updated type of terrain.
+ *           example: "Forest"
  *         pokemon:
  *           type: array
+ *           description: A list of Pokémon associated with the location (can be updated).
  *           items:
  *             type: string
- *           description: A list of Pokémon associated with the location (can be updated).
+ *             example: ["oddish"]
  */
 export interface LocationUpdate {
 	addressName?: string;
@@ -74,17 +83,20 @@ export interface LocationUpdate {
  *         id:
  *           type: string
  *           description: The unique identifier of the location.
+ *           example: "location-12345"
  *         addressName:
  *           type: string
  *           description: The name of the address or location.
+ *           example: "Viridian Forest"
  *         terrain:
  *           type: string
  *           description: The type of terrain (e.g., forest, mountain, etc.).
+ *           example: "Forest"
  *         pokemon:
  *           type: array
+ *           description: A list of Pokémon associated with the location.
  *           items:
  *             $ref: '#/components/schemas/PokemonData'
- *           description: A list of Pokémon associated with the location.
  */
 export interface Location {
 	id: string;
