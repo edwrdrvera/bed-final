@@ -19,15 +19,19 @@ import { PokemonInTeam } from "./pokemonModel";
  *         id:
  *           type: string
  *           description: The unique identifier for the trainer.
+ *           example: "12345"
  *         name:
  *           type: string
  *           description: The name of the Pokémon trainer.
+ *           example: "Red"
  *         age:
  *           type: number
  *           description: The age of the trainer.
+ *           example: 10
  *         region:
  *           type: string
  *           description: The region the trainer belongs to.
+ *           example: "Kanto"
  *         team:
  *           type: array
  *           items:
@@ -60,12 +64,15 @@ export interface Trainer {
  *         name:
  *           type: string
  *           description: The name of the new Pokémon trainer.
+ *           example: "Red"
  *         age:
  *           type: number
  *           description: The age of the new trainer.
+ *           example: 10
  *         region:
  *           type: string
  *           description: The region the new trainer belongs to.
+ *           example: "Kanto"
  *         team:
  *           type: array
  *           items:
@@ -92,12 +99,15 @@ export interface TrainerInput {
  *         name:
  *           type: string
  *           description: The updated name of the trainer.
+ *           example: "Red"
  *         age:
  *           type: number
  *           description: The updated age of the trainer.
+ *           example: 10
  *         region:
  *           type: string
  *           description: The updated region the trainer belongs to.
+ *           example: "Kanto"
  *         team:
  *           type: array
  *           items:
