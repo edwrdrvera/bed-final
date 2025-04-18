@@ -4,6 +4,15 @@ import { Trainer, TrainerUpdate } from "../models/trainerModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { successResponse } from "../models/responseModel";
 
+/**
+ *  Handles the creation of a new trainer.
+ *
+ * @param req - Incoming request object, containing the trainer data in the body.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response with an array of locations
+ *                          or passes an error
+ */
 export const createTrainer = async (
 	req: Request,
 	res: Response,
@@ -19,6 +28,15 @@ export const createTrainer = async (
 	}
 };
 
+/**
+ *  Handles the retrieval of all trainers.
+ *
+ * @param req - Incoming request object.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response with an array of all
+ *                          trainers or passes an error to the error handler.
+ */
 export const getAllTrainers = async (
 	req: Request,
 	res: Response,
@@ -32,6 +50,16 @@ export const getAllTrainers = async (
 	}
 };
 
+/**
+ *  Handles the retrieval of a trainer by its ID.
+ *
+ * @param req - Incoming request object, containing the trainer ID in the URL
+ *              parameters.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response with the trainer data or
+ *                          passes an error to the error handler.
+ */
 export const getTrainerById = async (
 	req: Request,
 	res: Response,
@@ -46,6 +74,16 @@ export const getTrainerById = async (
 	}
 };
 
+/**
+ *  Handles the update of a trainer by its ID.
+ *
+ * @param req - Incoming request object, containing the trainer ID in the URL
+ *              parameters and the updated trainer data in the body.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response with the updated trainer data
+ *                          or passes an error to the error handler.
+ */
 export const updateTrainer = async (
 	req: Request,
 	res: Response,
@@ -65,6 +103,16 @@ export const updateTrainer = async (
 	}
 };
 
+/**
+ *  Handles the deletion of a trainer by its ID.
+ *
+ * @param req - Incoming request object, containing the trainer ID in the URL
+ *              parameters.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response indicating the trainer has been
+ *                          deleted or passes an error to the error handler.
+ */
 export const deleteTrainer = async (
 	req: Request,
 	res: Response,
