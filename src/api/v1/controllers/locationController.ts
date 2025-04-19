@@ -4,6 +4,15 @@ import { Location, LocationUpdate } from "../models/locationModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { successResponse } from "../models/responseModel";
 
+/**
+ *  Creates a new location and sends a success response.
+ *
+ * @param req - Incoming request object, containing the location data in the body.
+ * @param res  - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a success response or passes an error to the
+ *                          error handler.
+ */
 export const createLocation = async (
 	req: Request,
 	res: Response,
@@ -21,6 +30,15 @@ export const createLocation = async (
 	}
 };
 
+/**
+ * Handles the retrieval of all locations.
+ *
+ * @param req - Incoming request object.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response with an array of all
+ *                          locations or passes an error to the error handler.
+ */
 export const getAllLocations = async (
 	req: Request,
 	res: Response,
@@ -34,6 +52,16 @@ export const getAllLocations = async (
 	}
 };
 
+/**
+ *  Handles the retrieval of a location by its ID.
+ *
+ * @param req - Incoming request object, containing the location ID in the URL
+ *              parameters.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response with the location data or
+ *                          passes an error to the error handler.
+ */
 export const getLocationById = async (
 	req: Request,
 	res: Response,
@@ -52,6 +80,16 @@ export const getLocationById = async (
 	}
 };
 
+/**
+ * Handles the update of a location by its ID.
+ *
+ * @param req - Incoming request object, containing the location ID in the URL
+ *              parameters and the updated data in the body.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response with the updated location data
+ *                          or passes an error to the error handler.
+ */
 export const updateLocation = async (
 	req: Request,
 	res: Response,
@@ -82,6 +120,15 @@ export const updateLocation = async (
 	}
 };
 
+/**
+ *  Handles the deletion of a location by its ID.
+ * @param req - Incoming request object, containing the location ID in the URL
+ *              parameters.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response indicating the deletion status
+ *                          or passes an error to the error handler.
+ */
 export const deleteLocation = async (
 	req: Request,
 	res: Response,

@@ -1,5 +1,9 @@
 import Joi, { ObjectSchema } from "joi";
 
+/**
+ * Joi validation schema for validating the request body when creating a
+ * new trainer.
+ */
 export const createTrainerSchema: ObjectSchema = Joi.object({
 	id: Joi.string()
 		.optional()
@@ -32,6 +36,10 @@ export const createTrainerSchema: ObjectSchema = Joi.object({
 		}),
 });
 
+/**
+ * Joi validation schema for validating the request body when updating an
+ * existing trainer.
+ */
 export const updateTrainerSchema: ObjectSchema = Joi.object({
 	id: Joi.string()
 		.optional()
