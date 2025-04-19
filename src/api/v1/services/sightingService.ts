@@ -17,10 +17,19 @@ import {
 import { getPokemonDetailsByName } from "./getPokemonService";
 import { PokemonData } from "../models/pokemonModel";
 
+// Constants for Firestore collections
 const SIGHTINGS_COLLECTION: string = "sightings";
 const TRAINERS_COLLECTION: string = "trainers";
 const LOCATIONS_COLLECTION: string = "locations";
 
+/**
+ * Creates a new sighting document in Firestore.
+ * Validates the trainer, location, and Pokemon data.
+ *
+ * @param sightingData - The data for the new sighting.
+ * @returns A promise that resolves to the created sighting object.
+ * @throws Error if the trainer, location, or Pokemon data is invalid.
+ */
 export const createSighting = async (
 	sightingData: SightingInput
 ): Promise<Sighting> => {
@@ -69,6 +78,11 @@ export const createSighting = async (
 	} as Sighting;
 };
 
+/**
+ * Retrieves all sighting documents from the Firestore collection.
+ *
+ * @returns A promise that resolves to an array of sighting objects.
+ */
 export const getAllSightings = async (): Promise<Sighting[]> => {
 	const snapshot: FirebaseFirestore.QuerySnapshot = await getDocuments(
 		SIGHTINGS_COLLECTION
@@ -80,6 +94,12 @@ export const getAllSightings = async (): Promise<Sighting[]> => {
 	});
 };
 
+/**
+ * Retrieves a specific sighting document by its ID from Firestore.
+ *
+ * @param id - The ID of the sighting document to retrieve.
+ * @returns A promise that resolves to the sighting object.
+ */
 export const getSightingById = async (id: string): Promise<Sighting> => {
 	const doc: DocumentSnapshot<DocumentData, DocumentData> =
 		await getDocumentById(SIGHTINGS_COLLECTION, id);
@@ -88,6 +108,15 @@ export const getSightingById = async (id: string): Promise<Sighting> => {
 	return sighting;
 };
 
+/**
+ * Updates an existing sighting document in Firestore by its ID.
+ * Validates trainer, location, and Pokemon data if they exist.
+ * Fetches details for any pokemon being updated.
+ *
+ * @param id - The ID of the sighting document to update.
+ * @param sightingData - The data to update the sighting document with.
+ * @returns A promise that resolves to the updated sighting object.
+ */
 export const updateSighting = async (
 	id: string,
 	sightingData: SightingUpdate
@@ -130,6 +159,12 @@ export const updateSighting = async (
 	return updatedSighting;
 };
 
+/**
+ * Deletes a sighting document from Firestore by its ID.
+ *
+ * @param id - The ID of the sighting document to delete.
+ * @returns A Promise resolving to void upon successful deletion.
+ */
 export const deleteSighting = async (id: string): Promise<void> => {
 	await deleteDocument(SIGHTINGS_COLLECTION, id);
 };
