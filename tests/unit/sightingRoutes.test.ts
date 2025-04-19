@@ -12,6 +12,7 @@ import {
 	SightingInput,
 	SightingUpdate,
 } from "../../src/api/v1/models/sightingModel";
+import { auth } from "../../config/firebaseConfig";
 
 jest.mock("../../src/api/v1/controllers/sightingController", () => ({
 	createSighting: jest.fn((req, res) => res.status(200).send()),
@@ -28,47 +29,87 @@ describe("Sighting Routes", () => {
 
 	describe("POST /api/v1/sightings", () => {
 		it("should call createSighting controller", async () => {
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testUserID",
+				role: "admin",
+			});
+
 			const mockSightingData: SightingInput = {
 				trainerId: "trainer-ash",
 				locationId: "location-pallet",
 				pokemonName: "pikachu",
 				date: new Date("2025-04-06T10:00:00Z"),
 			};
-			await request(app).post("/api/v1/sightings").send(mockSightingData);
+
+			const response = await request(app)
+				.post("/api/v1/sightings")
+				.set("Authorization", "Bearer testToken")
+				.send(mockSightingData);
+
 			expect(createSighting).toHaveBeenCalled();
 		});
 	});
 
 	describe("GET /api/v1/sightings", () => {
 		it("should call getAllSightings controller", async () => {
-			await request(app).get("/api/v1/sightings");
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testUserID",
+				role: "user",
+			});
+
+			await request(app)
+				.get("/api/v1/sightings")
+				.set("Authorization", "Bearer testToken");
 			expect(getAllSightings).toHaveBeenCalled();
 		});
 	});
 
 	describe("GET /api/v1/sightings/:id", () => {
 		it("should call getSightingById controller", async () => {
-			await request(app).get(`/api/v1/sightings/1`);
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testUserID",
+				role: "user",
+			});
+
+			await request(app)
+				.get("/api/v1/sightings/1")
+				.set("Authorization", "Bearer testToken");
 			expect(getSightingById).toHaveBeenCalled();
 		});
 	});
 
 	describe("PUT /api/v1/sightings/:id", () => {
 		it("should call updateSighting controller", async () => {
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testUserID",
+				role: "manager",
+			});
+
 			const newSightingData: SightingUpdate = {
 				trainerId: "trainer-brock",
 				locationId: "location-mountain",
 				pokemonName: "geodude",
-				date: new Date("2025-04-07T11:00:00Z"),
 			};
-			await request(app).put(`/api/v1/sightings/1`).send(newSightingData);
+
+			await request(app)
+				.put("/api/v1/sightings/testSightingId")
+				.set("Authorization", "Bearer testToken")
+				.send(newSightingData);
+
 			expect(updateSighting).toHaveBeenCalled();
 		});
 	});
 
 	describe("DELETE /api/v1/sightings/:id", () => {
 		it("should call deleteSighting controller", async () => {
-			await request(app).delete(`/api/v1/sightings/1`);
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testUserID",
+				role: "admin",
+			});
+
+			await request(app)
+				.delete("/api/v1/sightings/1")
+				.set("Authorization", "Bearer testToken");
 			expect(deleteSighting).toHaveBeenCalled();
 		});
 	});
