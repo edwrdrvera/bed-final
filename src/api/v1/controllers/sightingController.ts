@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as sightingService from "../services/sightingService";
-import { Sighting, SightingInput } from "../models/sightingModel";
+import { Sighting, SightingUpdate } from "../models/sightingModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { successResponse } from "../models/responseModel";
 
@@ -90,7 +90,7 @@ export const updateSighting = async (
 		const sightingId: string = req.params.id;
 		const updatedSighting: Sighting = await sightingService.updateSighting(
 			sightingId,
-			req.body as SightingInput
+			req.body as SightingUpdate
 		);
 		res
 			.status(HTTP_STATUS.OK)
