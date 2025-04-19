@@ -44,6 +44,7 @@ export interface Trainer {
 	age: number;
 	region: string;
 	team: PokemonInTeam[];
+	uid: string | null;
 }
 
 /**
@@ -119,4 +120,5 @@ export interface TrainerUpdate {
 	age?: number;
 	region?: string;
 	team?: string[];
+	uid?: string;
 }
