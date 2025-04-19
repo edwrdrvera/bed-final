@@ -1,5 +1,9 @@
 import Joi, { ObjectSchema } from "joi";
 
+/**
+ * Joi validation schema for validating the request body when creating a
+ * new location.
+ */
 export const createLocationSchema: ObjectSchema = Joi.object({
 	id: Joi.string()
 		.optional()
@@ -29,6 +33,10 @@ export const createLocationSchema: ObjectSchema = Joi.object({
 	updatedAt: Joi.date(),
 });
 
+/**
+ * Joi validation schema for validating the request body when updating an
+ * existing location.
+ */
 export const updateLocationSchema: ObjectSchema = Joi.object({
 	id: Joi.string()
 		.optional()
