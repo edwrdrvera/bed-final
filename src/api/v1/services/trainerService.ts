@@ -31,6 +31,7 @@ export const createTrainer = async (
 		age: trainerData.age,
 		region: trainerData.region,
 		team: [],
+		uid: null,
 	};
 
 	if (trainerData.team && trainerData.team.length > 0) {
