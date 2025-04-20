@@ -1,3 +1,6 @@
+import morgan from "morgan";
+import helmet from "helmet";
+import cors from "cors";
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
@@ -15,10 +18,17 @@ import sightingRoutes from "./api/v1/routes/sightingRoutes";
 import userRoutes from "./api/v1/routes/userRoutes";
 import adminRoutes from "./api/v1/routes/adminRoutes";
 
+// Initialize the Express application
 const app: Express = express();
+
+// Apply default helmet security headers
+app.use(helmet());
+
+app.use(cors());
 
 setupSwagger(app);
 
+app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

@@ -31,6 +31,10 @@ export const createSightingSchema: ObjectSchema = Joi.object({
  * existing sighting.
  */
 export const updateSightingSchema: ObjectSchema = Joi.object({
+	id: Joi.string().trim().optional().messages({
+		"string.empty": "id cannot be empty",
+		"string.base": "id must be a string",
+	}),
 	trainerId: Joi.string().trim().optional().messages({
 		"string.empty": "trainerId cannot be empty",
 		"string.base": "trainerId must be a string",

@@ -11,6 +11,7 @@ import {
 	LocationUpdate,
 	LocationInput,
 } from "../../src/api/v1/models/locationModel";
+import { auth } from "../../config/firebaseConfig";
 
 jest.mock("../../src/api/v1/controllers/locationController", () => ({
 	createLocation: jest.fn((req, res) => res.status(200).send()),
@@ -27,44 +28,85 @@ describe("Location Routes", () => {
 
 	describe("POST /api/v1/locations", () => {
 		it("should call createLocation controller", async () => {
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testID",
+				role: "admin",
+			});
+
 			const mockLocationData: LocationInput = {
 				addressName: "123 Main St",
 				terrain: "City",
 				pokemon: ["pikachu"],
 			};
-			await request(app).post("/api/v1/locations").send(mockLocationData);
+
+			const response: request.Response = await request(app)
+				.post("/api/v1/locations")
+				.set("Authorization", "Bearer testToken")
+				.send(mockLocationData);
+
+			expect(response.status).toBe(200);
 			expect(createLocation).toHaveBeenCalled();
 		});
 	});
 
 	describe("GET /api/v1/locations", () => {
 		it("should call getAllLocations controller", async () => {
-			await request(app).get("/api/v1/locations");
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testID",
+				role: "admin",
+			});
+
+			await request(app)
+				.get("/api/v1/locations")
+				.set("Authorization", "Bearer testToken");
+
 			expect(getAllLocations).toHaveBeenCalled();
 		});
 	});
 
 	describe("GET /api/v1/locations/:id", () => {
 		it("should call getLocationByID controller", async () => {
-			await request(app).get(`/api/v1/locations/1`);
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testID",
+				role: "admin",
+			});
+
+			await request(app)
+				.get(`/api/v1/locations/1`)
+				.set("Authorization", "Bearer testToken");
+
 			expect(getLocationById).toHaveBeenCalled();
 		});
 	});
 
 	describe("PUT /api/v1/locations/:id", () => {
 		it("should call updateLocation controller", async () => {
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testID",
+				role: "admin",
+			});
+
 			const newLocationData: LocationUpdate = {
 				addressName: "New Address",
 				terrain: "New Terrain",
 			};
-			await request(app).put("/api/v1/locations/1").send(newLocationData);
+			await request(app)
+				.put("/api/v1/locations/1")
+				.set("Authorization", "Bearer testToken")
+				.send(newLocationData);
 			expect(updateLocation).toHaveBeenCalled();
 		});
 	});
 
 	describe("DELETE /api/v1/locations/:id", () => {
 		it("should call deleteLocations controller", async () => {
-			await request(app).delete(`/api/v1/locations/1`);
+			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
+				uid: "testID",
+				role: "admin",
+			});
+			await request(app)
+				.delete(`/api/v1/locations/1`)
+				.set("Authorization", "Bearer testToken");
 			expect(deleteLocation).toHaveBeenCalled();
 		});
 	});

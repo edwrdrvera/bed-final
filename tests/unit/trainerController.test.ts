@@ -46,6 +46,7 @@ describe("Trainer Controller", () => {
 						type: ["electric"],
 					},
 				],
+				uid: null,
 			},
 			{
 				id: "2",
@@ -58,6 +59,7 @@ describe("Trainer Controller", () => {
 						type: ["grass", "poison"],
 					},
 				],
+				uid: null,
 			},
 		];
 	});

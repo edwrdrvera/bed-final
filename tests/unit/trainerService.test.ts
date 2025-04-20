@@ -45,11 +45,12 @@ describe("Trainer Service", () => {
 				region: "Kanto",
 				team: [],
 			};
-			const expectedTrainer: Omit<Trainer, "id"> = {
+			const expectedTrainerData: Omit<Trainer, "id"> = {
 				name: "Red",
 				age: 10,
 				region: "Kanto",
 				team: [],
+				uid: null,
 			};
 
 			(createDocument as jest.Mock).mockResolvedValue("newTrainerId");
@@ -57,7 +58,10 @@ describe("Trainer Service", () => {
 			await trainerService.createTrainer(trainerInput);
 
 			expect(createDocument).toHaveBeenCalledTimes(1);
-			expect(createDocument).toHaveBeenCalledWith("trainers", expectedTrainer);
+			expect(createDocument).toHaveBeenCalledWith(
+				"trainers",
+				expectedTrainerData
+			);
 		});
 
 		it("should create a trainer with pokemon details if provided", async () => {
@@ -81,6 +85,7 @@ describe("Trainer Service", () => {
 				age: 10,
 				region: "Kanto",
 				team: [mockPikachuData],
+				uid: null,
 			};
 
 			const expectedResult: Trainer = {
@@ -125,6 +130,7 @@ describe("Trainer Service", () => {
 						type: ["electric"],
 					},
 				],
+				uid: "userId1",
 			};
 			const mockTrainerData2: Omit<Trainer, "id"> = {
 				name: "Ash",
@@ -136,6 +142,7 @@ describe("Trainer Service", () => {
 						type: ["electric"],
 					},
 				],
+				uid: null,
 			};
 
 			const mockDocs: QueryDocumentSnapshot[] = [
@@ -179,6 +186,7 @@ describe("Trainer Service", () => {
 						type: ["electric"],
 					},
 				],
+				uid: "userId1",
 			};
 
 			const mockDoc: DocumentSnapshot<DocumentData, DocumentData> = {
