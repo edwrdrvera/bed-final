@@ -1,5 +1,9 @@
 import swaggerJsDoc from "swagger-jsdoc";
 
+if (process.env.NODE_ENV !== "production") {
+	require("dotenv").config();
+}
+
 const serverUrl: string =
 	process.env.SWAGGER_SERVER_URL || "http://localhost:3000/api/v1";
 
@@ -10,7 +14,7 @@ const swaggerOptions: swaggerJsDoc.Options = {
 		info: {
 			title: "Location, Pokemon, Sightings Management API Documentation",
 			version: "1.0.0",
-			description: "This is the API documentation for the applciation.",
+			description: "This is the API documentation for PokeLog.",
 		},
 		server: [
 			{
