@@ -14,7 +14,7 @@ const swaggerOptions: swaggerJsDoc.Options = {
 		info: {
 			title: "Location, Pokemon, Sightings Management API Documentation",
 			version: "1.0.0",
-			description: "This is the API documentation for the applciation.",
+			description: "This is the API documentation for PokeLog.",
 		},
 		server: [
 			{
