@@ -2,6 +2,9 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
 
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "../swagger.json"; // Load static spec from root
+
 dotenv.config();
 
 import setupSwagger from "../config/swagger";
@@ -21,6 +24,26 @@ app.use(express.urlencoded({ extended: true }));
 
 const publicFolderPath: string = path.join(__dirname, "./public");
 app.use("/public", express.static(publicFolderPath));
+
+const swaggerDistPath: string = path.join(
+	__dirname,
+	"../node_modules/swagger-ui-dist"
+);
+
+// Define options for Swagger UI setup
+const swaggerOptions: object = {
+	customCssUrl: "/public/swagger-ui.css",
+	customSiteTitle: "PokeLog API Docs",
+};
+
+app.use(
+	"/api-docs",
+	// Serve main static files
+	express.static(swaggerDistPath, { index: false }),
+	// Serve CSS files from the public folder
+	swaggerUi.serve,
+	swaggerUi.setup(swaggerDocument, swaggerOptions)
+);
 
 app.get("/", (req, res) => {
 	res.send("Hello, World!");
