@@ -1,5 +1,9 @@
 import swaggerJsDoc from "swagger-jsdoc";
 
+if (process.env.NODE_ENV !== "production") {
+	require("dotenv").config();
+}
+
 const serverUrl: string =
 	process.env.SWAGGER_SERVER_URL || "http://localhost:3000/api/v1";
 
