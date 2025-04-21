@@ -1,3 +1,6 @@
+import morgan from "morgan";
+import helmet from "helmet";
+import cors from "cors";
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
@@ -12,11 +15,20 @@ import errorHandler from "./api/v1/middleware/errorHandler";
 import locationRoutes from "./api/v1/routes/locationRoutes";
 import trainerRoutes from "./api/v1/routes/trainerRoutes";
 import sightingRoutes from "./api/v1/routes/sightingRoutes";
+import userRoutes from "./api/v1/routes/userRoutes";
+import adminRoutes from "./api/v1/routes/adminRoutes";
 
+// Initialize the Express application
 const app: Express = express();
+
+// Apply default helmet security headers
+app.use(helmet());
+
+app.use(cors());
 
 setupSwagger(app);
 
+app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -59,6 +71,8 @@ app.get("/api/v1/health", (req, res) => {
 app.use("/api/v1/locations", locationRoutes);
 app.use("/api/v1/trainers", trainerRoutes);
 app.use("/api/v1/sightings", sightingRoutes);
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 app.use(errorHandler);
 

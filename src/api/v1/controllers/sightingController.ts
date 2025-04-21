@@ -1,9 +1,19 @@
 import { Request, Response, NextFunction } from "express";
 import * as sightingService from "../services/sightingService";
-import { Sighting, SightingInput } from "../models/sightingModel";
+import { Sighting, SightingUpdate } from "../models/sightingModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { successResponse } from "../models/responseModel";
 
+/**
+ *  Handles the creation of a new sighting.
+ *
+ * @param req - Incoming request object, containing the sighting data in the
+ *              body.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a success response or passes an error to the
+ *                          error handler.
+ */
 export const createSighting = async (
 	req: Request,
 	res: Response,
@@ -21,6 +31,15 @@ export const createSighting = async (
 	}
 };
 
+/**
+ *  Handles the retrieval of all sightings.
+ *
+ * @param req - Incoming request object.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response with an array of all
+ *                          sightings or passes an error to the error handler.
+ */
 export const getAllSightings = async (
 	req: Request,
 	res: Response,
@@ -34,6 +53,16 @@ export const getAllSightings = async (
 	}
 };
 
+/**
+ *  Handles the retrieval of a sighting by its ID.
+ *
+ * @param req - Incoming request object, containing the sighting ID in the URL
+ *              parameters.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a JSON response with the sighting data or
+ *                          passes an error to the error handler.
+ */
 export const getSightingById = async (
 	req: Request,
 	res: Response,
@@ -61,7 +90,7 @@ export const updateSighting = async (
 		const sightingId: string = req.params.id;
 		const updatedSighting: Sighting = await sightingService.updateSighting(
 			sightingId,
-			req.body as SightingInput
+			req.body as SightingUpdate
 		);
 		res
 			.status(HTTP_STATUS.OK)
@@ -70,6 +99,17 @@ export const updateSighting = async (
 		next(error);
 	}
 };
+
+/**
+ *  Handles the deletion of a sighting by its ID.
+ *
+ * @param req - Incoming request object, containing the sighting ID in the URL
+ *              parameters.
+ * @param res - Response object.
+ * @param next - Next middleware function.
+ * @returns Promise<void> - Sends a success response or passes an error to the
+ *                          error handler.
+ */
 export const deleteSighting = async (
 	req: Request,
 	res: Response,

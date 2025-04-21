@@ -15,6 +15,14 @@ import { getPokemonTeamDataByName } from "./getPokemonService";
 
 const COLLECTION: string = "trainers";
 
+/**
+ * Creates a new trainer document in Firestore.
+ * Fetches minimal Pokemon data for the provided Pokemon names in the team.
+ * Initializes the trainer with a null UID.
+ *
+ * @param trainerData - The data for the new trainer.
+ * @returns A promise that resolves to the created trainer object.
+ */
 export const createTrainer = async (
 	trainerData: TrainerInput
 ): Promise<Trainer> => {
@@ -23,6 +31,7 @@ export const createTrainer = async (
 		age: trainerData.age,
 		region: trainerData.region,
 		team: [],
+		uid: null,
 	};
 
 	if (trainerData.team && trainerData.team.length > 0) {
@@ -48,6 +57,11 @@ export const createTrainer = async (
 	return newTrainer;
 };
 
+/**
+ * Retrieves all trainer documents from the Firestore collection.
+ *
+ * @returns A promise that resolves to an array of Trainer objects.
+ */
 export const getAllTrainers = async (): Promise<Trainer[]> => {
 	const snapshot: FirebaseFirestore.QuerySnapshot = await getDocuments(
 		COLLECTION
@@ -59,6 +73,12 @@ export const getAllTrainers = async (): Promise<Trainer[]> => {
 	});
 };
 
+/**
+ * Retrieves a specific trainer document by its ID from Firestore.
+ *
+ * @param id - The ID of the trainer document to retrieve.
+ * @returns A promise that resolves to the found Trainer object.
+ */
 export const getTrainerById = async (id: string): Promise<Trainer> => {
 	const doc: DocumentSnapshot<DocumentData, DocumentData> =
 		await getDocumentById(COLLECTION, id);
@@ -67,6 +87,15 @@ export const getTrainerById = async (id: string): Promise<Trainer> => {
 	return trainer;
 };
 
+/**
+ * Update a specific trainer document by its ID in Firestore.
+ * Fetches minimal Pokemon data for the provided Pokemon names in the team.
+ * Allows updating for the linked Firebase UID
+ *
+ * @param id - The ID of the trainer document to update.
+ * @param trainerData - The data to update the trainer document with.
+ * @returns A promise that resolves to the updated Trainer object.
+ */
 export const updateTrainer = async (
 	id: string,
 	trainerData: TrainerUpdate
@@ -76,6 +105,12 @@ export const updateTrainer = async (
 	return updatedTrainer;
 };
 
+/**
+ * Deletes a trainer document by its ID from Firestore.
+ *
+ * @param id - The ID of the trainer document to delete.
+ * @returns A promise that resolves to void.
+ */
 export const deleteTrainer = async (id: string): Promise<void> => {
 	await deleteDocument(COLLECTION, id);
 };

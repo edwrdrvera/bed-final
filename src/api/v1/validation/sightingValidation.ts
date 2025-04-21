@@ -1,5 +1,9 @@
 import Joi, { ObjectSchema } from "joi";
 
+/**
+ * Joi validation schema for validating the request body when creating a
+ * new sighting.
+ */
 export const createSightingSchema: ObjectSchema = Joi.object({
 	trainerId: Joi.string().trim().required().messages({
 		"any.required": "trainerId is required",
@@ -22,7 +26,15 @@ export const createSightingSchema: ObjectSchema = Joi.object({
 	}),
 });
 
+/**
+ * Joi validation schema for validating the request body when updating an
+ * existing sighting.
+ */
 export const updateSightingSchema: ObjectSchema = Joi.object({
+	id: Joi.string().trim().optional().messages({
+		"string.empty": "id cannot be empty",
+		"string.base": "id must be a string",
+	}),
 	trainerId: Joi.string().trim().optional().messages({
 		"string.empty": "trainerId cannot be empty",
 		"string.base": "trainerId must be a string",

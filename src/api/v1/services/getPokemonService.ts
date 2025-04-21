@@ -3,6 +3,12 @@ import { PokemonData, PokemonInTeam } from "../models/pokemonModel";
 
 const api: PokemonClient = new PokemonClient();
 
+/**
+ * Fetches Pokemon data from PokeAPI by name
+ *
+ * @param name - The name of the Pokemon to fetch.
+ * @returns - A promise that resolves to the Pokemon data or null if not found.
+ */
 export const getPokemonDetailsByName = async (
 	name: string
 ): Promise<PokemonData | null> => {
@@ -36,6 +42,13 @@ export const getPokemonDetailsByName = async (
 	}
 };
 
+/**
+ * Fetches minimal Pokemon data (name and type) from PokeAPI by name
+ *
+ * @param name - The name of the Pokemon to fetch.
+ * @returns A promise that resolves to the minimal Pokemon data or null if
+ *          not found.
+ */
 export const getPokemonTeamDataByName = async (
 	name: string
 ): Promise<PokemonInTeam | null> => {

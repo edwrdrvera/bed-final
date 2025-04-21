@@ -19,6 +19,13 @@ import { getPokemonDetailsByName } from "./getPokemonService";
 
 const COLLECTION: string = "locations";
 
+/**
+ * Creates a new location document in Firestore.
+ * Fetches Pokemon data for the provided Pokemon names.
+ *
+ * @param locationData - The data for the new location.
+ * @returns A promise that resolves to the created location object.
+ */
 export const createLocation = async (
 	locationData: LocationInput
 ): Promise<Location> => {
@@ -49,6 +56,11 @@ export const createLocation = async (
 	return { id, ...dataToSave } as Location;
 };
 
+/**
+ * Retrieves all location documents from the Firestore collection.
+ *
+ * @returns A promise that resolves to an array of location objects.
+ */
 export const getAllLocations = async (): Promise<Location[]> => {
 	const snapshot: FirebaseFirestore.QuerySnapshot = await getDocuments(
 		COLLECTION
@@ -60,6 +72,12 @@ export const getAllLocations = async (): Promise<Location[]> => {
 	});
 };
 
+/**
+ * Retrieves a location document by its ID from the Firestore collection.
+ *
+ * @param id - The ID of the location document to retrieve.
+ * @returns A promise that resolves to the location object.
+ */
 export const getLocationById = async (id: string): Promise<Location> => {
 	const doc: DocumentSnapshot<DocumentData, DocumentData> =
 		await getDocumentById(COLLECTION, id);
@@ -68,6 +86,13 @@ export const getLocationById = async (id: string): Promise<Location> => {
 	return location;
 };
 
+/**
+ * Updates an existing location document in the Firestore collection by its ID.
+ *
+ * @param id - The ID of the location document to update.
+ * @param locationData - The data to update the location document with.
+ * @returns A promise that resolves to the updated location object.
+ */
 export const updateLocation = async (
 	id: string,
 	locationData: LocationUpdate
