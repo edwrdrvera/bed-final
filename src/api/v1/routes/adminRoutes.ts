@@ -15,6 +15,8 @@ const router: Router = express.Router();
  *     summary: Set custom claims for a user
  *     description: Allows an administrator to set custom claims for a Firebase user.
  *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
