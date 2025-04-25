@@ -51,30 +51,14 @@ describe("Location Routes", () => {
 
 	describe("GET /api/v1/locations", () => {
 		it("should call getAllLocations controller", async () => {
-			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
-				uid: "testID",
-				role: "admin",
-			});
-
-			await request(app)
-				.get("/api/v1/locations")
-				.set("Authorization", "Bearer testToken");
-
+			await request(app).get("/api/v1/locations");
 			expect(getAllLocations).toHaveBeenCalled();
 		});
 	});
 
 	describe("GET /api/v1/locations/:id", () => {
 		it("should call getLocationByID controller", async () => {
-			(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({
-				uid: "testID",
-				role: "admin",
-			});
-
-			await request(app)
-				.get(`/api/v1/locations/1`)
-				.set("Authorization", "Bearer testToken");
-
+			await request(app).get(`/api/v1/locations/1`);
 			expect(getLocationById).toHaveBeenCalled();
 		});
 	});

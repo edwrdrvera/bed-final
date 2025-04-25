@@ -74,8 +74,6 @@ router.post(
  *     summary: Get all locations
  *     description: Retrieves a list of all locations stored in the system.
  *     tags: [Locations]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       "200":
  *         description: A list of all locations
@@ -85,19 +83,12 @@ router.post(
  *               type: array
  *               items:
  *                 $ref: "#/components/schemas/Location"
- *       "401":
- *         description: Unauthorized - Authentication token is missing or invalid
- *       "403":
- *         description: Forbidden - The authenticated user does not have the required role
+ *       "404":
+ *         description: Not Found - No locations found
  *       "500":
  *         description: Internal server error
  */
-router.get(
-	"/",
-	authenticate,
-	isAuthorized({ hasRole: ["admin", "officer", "manager", "user"] }),
-	locationController.getAllLocations
-);
+router.get("/", locationController.getAllLocations);
 
 /**
  * @route GET /api/v1/locations/:id
@@ -109,8 +100,6 @@ router.get(
  *     summary: Get a location by ID
  *     description: Retrieve a specific location by its ID.
  *     tags: [Locations]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -126,21 +115,12 @@ router.get(
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Location"
- *       "401":
- *         description: Unauthorized - Authentication token is missing or invalid
- *       "403":
- *         description: Forbidden - The authenticated user does not have the required role
  *       "404":
  *         description: Location not found - The specified location does not exist
  *       "500":
  *         description: Internal server error
  */
-router.get(
-	"/:id",
-	authenticate,
-	isAuthorized({ hasRole: ["admin", "officer", "manager"] }),
-	locationController.getLocationById
-);
+router.get("/:id", locationController.getLocationById);
 
 /**
  * @route PUT /api/v1/locations/:id
